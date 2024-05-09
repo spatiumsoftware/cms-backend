@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                git branch: 'pipeline', credentialsId: 'github-creden', url: 'https://github.com/spatiumsoftware/cms-backend.git'   
+                git branch: 'master', credentialsId: 'github-token', url: 'https://github.com/spatiumsoftware/cms-backend.git'   
                 echo 'checkouting...'
             }
         }
