@@ -31,32 +31,6 @@ pipeline {
                 echo 'publishing ...'
             }
         }
-        // stage("Build Docker Image"){
-        //     steps{
-        //         sh 'docker build -t abdelrahman9655/hr-app-backend:$BUILD_NUMBER  -f SpatiumHR/Dockerfile .'
-        //     }
-        // }
-        // stage('Login To Dockerhub'){
-        //     steps{
-        //         withCredentials([usernamePassword(credentialsId:'dockerhub', usernameVariable:'USERNAME', passwordVariable: 'PASSWORD')]){
-        //         sh'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
-        //         }
-        //     }
-        // }
-        // stage("Push Docker Image"){
-        //     steps{
-        //         sh 'docker push abdelrahman9655/hr-app-backend:$BUILD_NUMBER'
-        //     }
-        // }
-        // stage('Delete Local Image') {
-        //     steps {
-        //         sh 'docker rmi abdelrahman9655/hr-app-backend:$BUILD_NUMBER'
-        //     }
-        // }
     }
-    // post{
-    //     always{
-    //         sh 'docker logout'
-    //     }
-    // }
+    
 }
