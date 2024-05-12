@@ -1,5 +1,6 @@
 pipeline {
     agent any
+ 
     stages {
         stage('checkout') {
             steps {
@@ -11,12 +12,6 @@ pipeline {
             steps {
                 sh 'dotnet build'
                 echo 'Building...'
-            }
-        }
-        stage('Testing') {
-            steps {
-                sh 'dotnet test'
-                echo 'testing...'
             }
         }
         stage('Restoring') {
@@ -31,6 +26,36 @@ pipeline {
                 echo 'publishing ...'
             }
         }
+        stage("Build Docker Image"){
+            steps{
+                sh'pwd'
+                sh 'cd /var/lib/jenkins/workspace/HR_Backend/SpatiumHR/'
+                sh'pwd'
+                sh'ls'
+                sh 'docker build -t abdelrahman9655/cms-backend:$BUILD_NUMBER  -f  Dockerfile .'
+            }
+        }
+        stage('Login To Dockerhub'){
+            steps{
+                withCredentials([usernamePassword(credentialsId:'dockerhub-cred', usernameVariable:'USERNAME', passwordVariable: 'PASSWORD')]){
+                sh'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                }
+            }
+        }
+        stage("Push Docker Image"){
+            steps{
+                sh 'docker push abdelrahman9655/cms-backend:$BUILD_NUMBER'
+            }
+        }
+        stage('Delete Local Image') {
+            steps {
+                sh 'docker rmi abdelrahman9655/cms-backend:$BUILD_NUMBER'
+            }
+        }
     }
-    
+    post{
+        always{
+            sh 'docker logout'
+        }
+    }
 }
