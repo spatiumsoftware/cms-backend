@@ -28,10 +28,6 @@ pipeline {
         }
         stage("Build Docker Image"){
             steps{
-                sh'pwd'
-                sh 'cd /var/lib/jenkins/workspace/HR_Backend/SpatiumHR/'
-                sh'pwd'
-                sh'ls'
                 sh 'docker build -t abdelrahman9655/cms-backend:$BUILD_NUMBER  -f  Dockerfile .'
             }
         }
