@@ -11,7 +11,7 @@ pipeline {
         stage('Building') {
             steps {
                 sh 'dotnet build'
-                echo 'Building...'
+                echo 'Building....'
             }
         }
         stage('Restoring') {
