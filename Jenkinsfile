@@ -7,6 +7,11 @@ pipeline {
                 git branch: 'master', credentialsId: 'github-cred', url: 'https://github.com/spatiumsoftware/cms-backend.git'   
                 echo 'checkouting...'
             }
+             post {
+                always {
+                    echo "This block always runs after this stage."
+                }
+            }
         }
         stage('Building') {
             steps {
@@ -25,6 +30,11 @@ pipeline {
                 sh 'dotnet publish -c Release -o ./publish'  
                 echo 'publishing ...'
             }
+             post {
+                unstable {
+                    echo "This block runs when the status of this stage is marked unstable."
+                }
+            }
         }
         stage("Build Docker Image"){
             steps{
@@ -41,6 +51,11 @@ pipeline {
         stage("Push Docker Image"){
             steps{
                 sh 'docker push abdelrahman9655/cms-backend:$BUILD_NUMBER'
+            }
+             post {
+                success {
+                    echo "This block runs when the stage succeeded."
+                }
             }
         }
         stage('Delete Local Image') {
