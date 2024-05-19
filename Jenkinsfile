@@ -16,12 +16,12 @@ pipeline {
         stage('Building') {
             steps {
                 sh 'dotnet build'
+            }     
                  post {
                     success {
                     slackSend message: 'this pipeline has been build sucessfully '
                     } 
                 }
-            }
         }
         stage('Restoring') {
             steps {
